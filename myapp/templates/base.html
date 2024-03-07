@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Currency Converter</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="static/css/base.css">
+</head>
+
+<body>
+
+<h1>Currency converter</h1>
+<p>Welcome to our currency converter, 
+   your go-to tool for seamless currency conversions.</p>
+
+<form method="POST" action="/">
+    {% csrf_token %}
+
+    <div class="form">
+        <div class="base_currency_div">
+            <p class="currency_text">Select the base currency</p>
+            <select name="base_curr" id="base_curr">
+                {% for currency in currencies %}
+                <option>
+                    {{currency}}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="currency_to_div">
+            <p class="currency_text">Select the currency to convert to</p>
+            <select name="curr_to" id="curr_to">
+                {% for currency in currencies %}
+                <option>
+                    {{currency}}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="amount_div">
+            <div class="amount_text">Type the amount: </div>
+            <input type="number" id="quantity" name="quantity" min="1" required>
+        </div>
+    </div>
+
+    <button type="submit" name="save">Convert</button>
+
+    {% if conv_amount is not None %}
+    <div class="result" name="result">
+        {{form_data.quantity}} {{form_data.base_curr}} is equal to {{conv_amount}} {{form_data.curr_to}}
+    </div>
+    {% endif %}
+</form>
+
+</body>
+</html>
